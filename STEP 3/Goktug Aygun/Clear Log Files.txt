@@ -1,0 +1,209 @@
+[26, 18:57:02] SELECT *
+FROM Average_Emission
+LIMIT 0, 1000
+: Running...
+[26, 18:57:02] SELECT *
+FROM Average_Emission
+LIMIT 0, 1000
+: Fetching...
+[26, 18:57:02] SELECT *
+FROM Average_Emission
+LIMIT 0, 1000
+: 198 row(s) returned
+
+[47, 19:08:53] SELECT *
+FROM Worldwide_Emissions
+LIMIT 0, 1000
+: Running...
+[47, 19:08:53] SELECT *
+FROM Worldwide_Emissions
+LIMIT 0, 1000
+: Fetching...
+[47, 19:08:53] SELECT *
+FROM Worldwide_Emissions
+LIMIT 0, 1000
+: 1 row(s) returned
+
+[21, 13:18:51] SELECT * 
+FROM countries_with_high_emission
+LIMIT 0, 1000
+: Running...
+[21, 13:18:51] SELECT * 
+FROM countries_with_high_emission
+LIMIT 0, 1000
+: Fetching...
+[21, 13:18:51] SELECT * 
+FROM countries_with_high_emission
+LIMIT 0, 1000
+: 32 row(s) returned
+
+
+[37, 13:27:40] SELECT *
+FROM air_pollution_deaths_of_countries
+LIMIT 0, 1000
+: Running...
+[37, 13:27:40] SELECT *
+FROM air_pollution_deaths_of_countries
+LIMIT 0, 1000
+: Fetching...
+[37, 13:27:40] SELECT *
+FROM air_pollution_deaths_of_countries
+LIMIT 0, 1000
+: 228 row(s) returned
+
+[40, 13:29:42] SELECT *
+FROM air_pollution_deaths_worldwide
+LIMIT 0, 1000
+: Running...
+[40, 13:29:42] SELECT *
+FROM air_pollution_deaths_worldwide
+LIMIT 0, 1000
+: Fetching...
+[40, 13:29:42] SELECT *
+FROM air_pollution_deaths_worldwide
+LIMIT 0, 1000
+: 1 row(s) returned
+
+[47, 13:33:56] SELECT *
+FROM countries_with_high_deaths
+LIMIT 0, 1000
+: Running...
+[47, 13:33:56] SELECT *
+FROM countries_with_high_deaths
+LIMIT 0, 1000
+: Fetching...
+[47, 13:33:56] SELECT *
+FROM countries_with_high_deaths
+LIMIT 0, 1000
+: 29 row(s) returned
+
+[59, 13:44:51] SELECT *
+FROM Left_Outer
+LIMIT 0, 1000
+: Running...
+[59, 13:44:51] SELECT *
+FROM Left_Outer
+LIMIT 0, 1000
+: Fetching...
+[59, 13:44:51] SELECT *
+FROM Left_Outer
+LIMIT 0, 1000
+: 19 row(s) returned
+
+[96, 14:09:38] SELECT * -- has 19 countries
+FROM countries_with_high_deaths LEFT JOIN countries_with_high_emission
+ON countries_with_high_emission.iso_code = countries_with_high_deaths.iso_code 
+WHERE countries_with_high_emission.iso_code IS NULL
+LIMIT 0, 1000
+: Running...
+[96, 14:09:38] SELECT * -- has 19 countries
+FROM countries_with_high_deaths LEFT JOIN countries_with_high_emission
+ON countries_with_high_emission.iso_code = countries_with_high_deaths.iso_code 
+WHERE countries_with_high_emission.iso_code IS NULL
+LIMIT 0, 1000
+: Fetching...
+[96, 14:09:39] SELECT * -- has 19 countries
+FROM countries_with_high_deaths LEFT JOIN countries_with_high_emission
+ON countries_with_high_emission.iso_code = countries_with_high_deaths.iso_code 
+WHERE countries_with_high_emission.iso_code IS NULL
+LIMIT 0, 1000
+: 19 row(s) returned
+
+[115, 14:19:57] SELECT iso_code
+FROM high_air_pollution_deaths APD
+WHERE APD.iso_code IN 
+(
+		SELECT iso_code -- has 21 countries
+		FROM air_pollution_deaths_of_countries APC , air_pollution_deaths_worldwide APWW
+		WHERE APC.Average_Deaths_by_Household_Air_Pollution > APWW.Average_Deaths_by_Household_Air_Pollution_worldwide
+	)
+LIMIT 0, 1000
+: Fetching...
+[115, 14:19:57] SELECT iso_code
+FROM high_air_pollution_deaths APD
+WHERE APD.iso_code IN 
+(
+		SELECT iso_code -- has 21 countries
+		FROM air_pollution_deaths_of_countries APC , air_pollution_deaths_worldwide APWW
+		WHERE APC.Average_Deaths_by_Household_Air_Pollution > APWW.Average_Deaths_by_Household_Air_Pollution_worldwide
+	)
+LIMIT 0, 1000
+: 15 row(s) returned
+
+
+
+
+[119, 14:22:35] SELECT iso_code 
+FROM high_air_pollution_deaths APD
+WHERE  EXISTS 
+(
+		SELECT iso_code -- has 21 countries
+		FROM air_pollution_deaths_of_countries APC , air_pollution_deaths_worldwide APWW
+		WHERE APC.Average_Deaths_by_Household_Air_Pollution > APWW.Average_Deaths_by_Household_Air_Pollution_worldwide
+        AND APD.iso_code = iso_code
+	)
+LIMIT 0, 1000
+: Running...
+[119, 14:22:35] SELECT iso_code 
+FROM high_air_pollution_deaths APD
+WHERE  EXISTS 
+(
+		SELECT iso_code -- has 21 countries
+		FROM air_pollution_deaths_of_countries APC , air_pollution_deaths_worldwide APWW
+		WHERE APC.Average_Deaths_by_Household_Air_Pollution > APWW.Average_Deaths_by_Household_Air_Pollution_worldwide
+        AND APD.iso_code = iso_code
+	)
+LIMIT 0, 1000
+: Fetching...
+[119, 14:22:35] SELECT iso_code 
+FROM high_air_pollution_deaths APD
+WHERE  EXISTS 
+(
+		SELECT iso_code -- has 21 countries
+		FROM air_pollution_deaths_of_countries APC , air_pollution_deaths_worldwide APWW
+		WHERE APC.Average_Deaths_by_Household_Air_Pollution > APWW.Average_Deaths_by_Household_Air_Pollution_worldwide
+        AND APD.iso_code = iso_code
+	)
+LIMIT 0, 1000
+: 15 row(s) returned
+
+[41, 17:58:42] ALTER TABLE nature_deaths 
+ADD CONSTRAINT check_interval 
+CHECK (deaths_by_unsafe_water_source >= 0 AND deaths_by_unsafe_water_source <= 2450944): 6840 row(s) affected
+Records: 6840  Duplicates: 0  Warnings: 0
+
+[50, 21:00:59] INSERT INTO nature_deaths VALUES ("AFG", 2020, 10, -1, 10, 10, 10) -- expecting to get error: Running...
+[50, 21:00:59] INSERT INTO nature_deaths VALUES ("AFG", 2020, 10, -1, 10, 10, 10) -- expecting to get error: Error Code: 3819. Check constraint 'check_interval' is violated.
+[51, 21:02:10] INSERT INTO nature_deaths VALUES ("AFG", 2020, 10, 2450945, 10, 10, 10): Running...
+[51, 21:02:10] INSERT INTO nature_deaths VALUES ("AFG", 2020, 10, 2450945, 10, 10, 10): Error Code: 3819. Check constraint 'check_interval' is violated.
+
+[4, 17:16:36] CALL get_death_numbers("AFG"): Running...
+[4, 17:16:36] CALL get_death_numbers("AFG"): Fetching...
+[4, 17:16:36] CALL get_death_numbers("AFG"): 30 row(s) returned
+
+[48, 20:59:49] CALL get_death_numbers("GBR"): Running...
+[48, 20:59:49] CALL get_death_numbers("GBR"): Fetching...
+[48, 20:59:49] CALL get_death_numbers("GBR"): 30 row(s) returned
+
+[73, 21:16:48] CALL get_death_numbers("TUR"): Running...
+[73, 21:16:48] CALL get_death_numbers("TUR"): Fetching...
+[73, 21:16:48] CALL get_death_numbers("TUR"): 30 row(s) returned
+
+[56, 21:04:18] CREATE TRIGGER control_insert BEFORE INSERT ON `nature_deaths`
+FOR EACH ROW
+BEGIN
+	set @bottom = MIN(nature_deaths.deaths_by_unsafe_water_source);
+	set @top = MAX(nature_deaths.deaths_by_unsafe_water_source);
+    IF new.deaths_by_unsafe_water_source > top THEN SET new.deaths_by_unsafe_water_source = top; END IF;
+    IF new.deaths_by_unsafe_water_source < bottom THEN SET new.deaths_by_unsafe_water_source = bottom; END IF;
+END;: 0 row(s) affected
+
+[62, 21:10:40] CREATE TRIGGER control_update BEFORE UPDATE ON `nature_deaths`
+FOR EACH ROW
+BEGIN
+	set @bottom = MIN(nature_deaths.deaths_by_unsafe_water_source);
+	set @top = MAX(nature_deaths.deaths_by_unsafe_water_source);
+    IF new.deaths_by_unsafe_water_source > top THEN SET new.deaths_by_unsafe_water_source = top; END IF;
+    IF new.deaths_by_unsafe_water_source < bottom THEN SET new.deaths_by_unsafe_water_source = bottom; END IF;
+END;: 0 row(s) affected
+
